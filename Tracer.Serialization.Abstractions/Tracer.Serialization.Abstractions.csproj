@@ -44,5 +44,11 @@
     <Compile Include="ITraceResultSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tracer.Core\Tracer.Core.csproj">
+      <Project>{6974C5FE-FFE5-49E0-87EA-1761555DD3BD}</Project>
+      <Name>Tracer.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
