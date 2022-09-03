@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Tracer.Core.Domain;
 
@@ -32,6 +33,7 @@ namespace Tracer.Core
             string methodName = (new System.Diagnostics.StackTrace()).GetFrame(1).GetMethod().Name;
             string className = (new System.Diagnostics.StackTrace()).GetFrame(1).GetMethod().DeclaringType.Name;
             string inheritedMethodName = (new System.Diagnostics.StackTrace()).GetFrame(2).GetMethod().Name;
+            int threadId = Thread.CurrentThread.ManagedThreadId;
 
             long additionalTime = 0;
 
@@ -43,7 +45,7 @@ namespace Tracer.Core
                     continue;
             }
 
-            traceResults.AddResult(methodName, className, stopWatch.ElapsedMilliseconds + additionalTime, inheritedMethodName);
+            traceResults.AddResult(methodName, className, stopWatch.ElapsedMilliseconds + additionalTime, inheritedMethodName, threadId);
 
             stopWatch.Reset();
             StartTrace();

@@ -4,9 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tracer.Core.Domain;
 
-namespace Tracer.Serialization.Abstractions
+namespace Tracer.Serialization.Abstractions.Data
 {
     public interface ITraceResultSerializer
     {

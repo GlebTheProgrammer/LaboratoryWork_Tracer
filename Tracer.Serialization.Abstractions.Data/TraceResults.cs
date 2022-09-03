@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tracer.Core.Domain
+namespace Tracer.Serialization.Abstractions.Data
 {
     public class TraceResults
     {
