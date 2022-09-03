@@ -95,18 +95,24 @@ namespace Tracer.Example
                 {
                     List<int> itemsId = new List<int>();
 
-                    long threadTime = 0;
 
                     for (int j = 0; j < traceResults.methodsName.Count; j++)
                     {
                         if (traceResults.threadsId[j] == i)
                         {
                             itemsId.Add(j);
-                            threadTime += traceResults.workTimes[j];
                         }
                     }
 
                     var methods = GetMethodsIerarchy(itemsId, traceResults, new List<Method>());
+
+                    long threadTime = 0;
+                    foreach (var method in methods)
+                    {
+                        threadTime += method.Time;
+                    }
+
+                    methods.Reverse();
 
                     result.Add(new Thread(i, threadTime, methods));
                 }
