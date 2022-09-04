@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TracerSerializerJSON", "Tra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TracerSerializerYAML", "TracerSerializerYAML\TracerSerializerYAML.csproj", "{D680D1DF-3717-4A20-A168-55DC6FC8B4A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TracerSerializerXML", "TracerSerializerXML\TracerSerializerXML.csproj", "{B167B650-F8B0-46A5-AF6A-2756EA1C8194}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D680D1DF-3717-4A20-A168-55DC6FC8B4A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D680D1DF-3717-4A20-A168-55DC6FC8B4A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D680D1DF-3717-4A20-A168-55DC6FC8B4A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B167B650-F8B0-46A5-AF6A-2756EA1C8194}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B167B650-F8B0-46A5-AF6A-2756EA1C8194}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B167B650-F8B0-46A5-AF6A-2756EA1C8194}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B167B650-F8B0-46A5-AF6A-2756EA1C8194}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

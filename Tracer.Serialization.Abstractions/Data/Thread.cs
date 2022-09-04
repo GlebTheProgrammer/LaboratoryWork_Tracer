@@ -18,5 +18,10 @@ namespace Tracer.Serialization.Abstractions.Data
             Time = time;
             Methods = methods;
         }
+
+        public Thread()
+        {
+
+        }
     }
 }

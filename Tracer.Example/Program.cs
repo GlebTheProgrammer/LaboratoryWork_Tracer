@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Tracer.Core;
 using Tracer.Core.Domain;
 using Tracer.Serialization.Abstractions.Data;
+using System.Xml.Serialization;
 
 namespace Tracer.Example
 {
@@ -59,6 +60,19 @@ namespace Tracer.Example
             Console.WriteLine(((Task<string>)result_YAML).Result);
             Console.WriteLine("YAML serialization has been completed...\n");
 
+
+            string dllfile_XML = @"C:\Users\Gleb\OneDrive\Рабочий стол\For Git\LaboratoryWork_Tracer\TracerSerializerXML\bin\Debug\TracerSerializerXML.dll";
+            Assembly assembly_XML = Assembly.LoadFile(dllfile_XML);
+            var myType_XML = assembly_XML.GetType("TracerSerializerXML.TracerXMLserializer");
+            MethodInfo myMethod_XML = myType_XML.GetMethod("Serialize");
+            object instance_XML = Activator.CreateInstance(myType_XML);
+            string savePath_XML = @"C:\Users\Gleb\OneDrive\Рабочий стол\Data.xml";
+            Console.WriteLine("Saving data in XML file process has been started...");
+            var result_XML = myMethod_XML.Invoke(instance_XML, new object[] { threadsResult, new FileStream(savePath_XML, FileMode.OpenOrCreate) });
+            Console.WriteLine(((Task<string>)result_XML).Result);
+            Console.WriteLine("XML serialization has been completed...\n");
+
+            Console.WriteLine("All serialization processes have been completed!");
 
             Console.ReadLine();
         }
