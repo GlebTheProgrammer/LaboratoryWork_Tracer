@@ -16,18 +16,22 @@ namespace Tracer.Example
     {
         static void Main(string[] args)
         {
+            // Creating a single tracer 
             var tracer = new MainTracer();
 
-            var foo = new Foo(tracer);
-            foo.MyMethod();
+            // Calling methods using the same tracer
+            var a = new A(tracer);
+            a.MethodA();
+            var c = new C(tracer);
+            c.MethodC();
 
-            var car = new Car(tracer);
-            car.MyMethod();
+            // Getting trace results as a List of all methods
+            var results = a.getTracerResults();
 
-            var results = foo.getTracerResults();
-
+            // Gettint results as ierarchy of all methods
             var threadsResult = GetThreadsForSerialization(results);
 
+            // Showing tracing results to the user
             Console.WriteLine("Threads:\n");
             foreach (var threadResult in threadsResult)
             {
@@ -37,6 +41,7 @@ namespace Tracer.Example
                 PrintList(threadResult.Methods, "\t\t");
             }
 
+            // JSON serialization
             string dllfile_JSON = @"C:\Users\Gleb\OneDrive\Рабочий стол\For Git\LaboratoryWork_Tracer\TracerSerializerJSON\bin\Debug\TracerSerializerJSON.dll";
             Assembly assembly_JSON = Assembly.LoadFile(dllfile_JSON);
             var myType_JSON = assembly_JSON.GetType("TracerSerializerJSON.TracerJSONserializer");
@@ -48,7 +53,7 @@ namespace Tracer.Example
             Console.WriteLine(((Task<string>)result_JSON).Result);
             Console.WriteLine("JSON serialization has been completed...\n");
 
-
+            // YAML serialization
             string dllfile_YAML = @"C:\Users\Gleb\OneDrive\Рабочий стол\For Git\LaboratoryWork_Tracer\TracerSerializerYAML\bin\Debug\TracerSerializerYAML.dll";
             Assembly assembly_YAML = Assembly.LoadFile(dllfile_YAML);
             var myType_YAML = assembly_YAML.GetType("TracerSerializerYAML.TracerYAMLserializer");
@@ -60,7 +65,7 @@ namespace Tracer.Example
             Console.WriteLine(((Task<string>)result_YAML).Result);
             Console.WriteLine("YAML serialization has been completed...\n");
 
-
+            // XML serialization
             string dllfile_XML = @"C:\Users\Gleb\OneDrive\Рабочий стол\For Git\LaboratoryWork_Tracer\TracerSerializerXML\bin\Debug\TracerSerializerXML.dll";
             Assembly assembly_XML = Assembly.LoadFile(dllfile_XML);
             var myType_XML = assembly_XML.GetType("TracerSerializerXML.TracerXMLserializer");
@@ -76,8 +81,6 @@ namespace Tracer.Example
 
             Console.ReadLine();
         }
-
-
 
         private static void PrintList(List<Method> methods, string indent)
         {
@@ -99,16 +102,7 @@ namespace Tracer.Example
         }
 
 
-
-
-
-
-
-
-
-
-
-
+        // Getting a list of all threads with their methods ierarchy
         private static List<Thread> GetThreadsForSerialization(TraceResults traceResults)
         {
             var result = new List<Thread>();
@@ -151,6 +145,7 @@ namespace Tracer.Example
             return result;
         }
 
+        // Getting methods ierarchy of a single thread
         private static List<Method> GetMethodsIerarchy(List<int> itemsId, TraceResults traceResults, List<Method> methods)
         {
             var result = new List<Method>();
@@ -213,28 +208,22 @@ namespace Tracer.Example
         }
     }
 
-
-    
-
-
-
-
-
-    public class Foo
+    // Classes to use when calling methods
+    public class A
     {
-        private Bar bar;
+        private B b;
         private ITracer tracer;
-        public Foo(ITracer tracer)
+        public A(ITracer tracer)
         {
             this.tracer = tracer;
-            bar = new Bar(this.tracer);
+            b = new B(this.tracer);
         }
 
-        public void MyMethod()
+        public void MethodA()
         {
             tracer.StartTrace();
-            bar.InnerMethod();
-            bar.InnerMethod();
+            b.MethodB();
+            b.MethodB();
             System.Threading.Thread.Sleep(100);
             tracer.StopTrace();
         }
@@ -244,15 +233,15 @@ namespace Tracer.Example
             return tracer.GetTraceResult();
         }
     }
-    public class Bar
+    public class B
     {
         private ITracer tracer;
-        public Bar(ITracer tracer)
+        public B(ITracer tracer)
         {
             this.tracer = tracer;
         }
 
-        public void InnerMethod()
+        public void MethodB()
         {
             tracer.StartTrace();
             System.Threading.Thread.Sleep(1);
@@ -264,26 +253,21 @@ namespace Tracer.Example
             return tracer.GetTraceResult();
         }
     }
-
-
-
-
-
-    public class Car
+    public class C
     {
-        private Bus bar;
+        private D d;
         private ITracer tracer;
-        public Car(ITracer tracer)
+        public C(ITracer tracer)
         {
             this.tracer = tracer;
-            bar = new Bus(this.tracer);
+            d = new D(this.tracer);
         }
 
-        public void MyMethod()
+        public void MethodC()
         {
             tracer.StartTrace();
-            bar.InnerMethod();
-            bar.InnerMethod();
+            d.MethodD();
+            d.MethodD();
             System.Threading.Thread.Sleep(100);
             tracer.StopTrace();
         }
@@ -293,15 +277,15 @@ namespace Tracer.Example
             return tracer.GetTraceResult();
         }
     }
-    public class Bus
+    public class D
     {
         private ITracer tracer;
-        public Bus(ITracer tracer)
+        public D(ITracer tracer)
         {
             this.tracer = tracer;
         }
 
-        public void InnerMethod()
+        public void MethodD()
         {
             tracer.StartTrace();
             System.Threading.Thread.Sleep(1);
@@ -313,13 +297,5 @@ namespace Tracer.Example
             return tracer.GetTraceResult();
         }
     }
-
-
-
-
-
-
-
-
 
 }
