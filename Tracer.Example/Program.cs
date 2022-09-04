@@ -9,6 +9,7 @@ using Tracer.Core;
 using Tracer.Core.Domain;
 using Tracer.Serialization.Abstractions.Data;
 using System.Xml.Serialization;
+using System.Diagnostics;
 
 namespace Tracer.Example
 {
@@ -20,10 +21,18 @@ namespace Tracer.Example
             var tracer = new MainTracer();
 
             // Calling methods using the same tracer
+
+            var e = new E(tracer);
+            e.MethodE();
+
             var a = new A(tracer);
             a.MethodA();
+
             var c = new C(tracer);
             c.MethodC();
+
+            System.Threading.Thread thread = new System.Threading.Thread(new System.Threading.ThreadStart(e.MethodE));
+            thread.Start();
 
             // Getting trace results as a List of all methods
             var results = a.getTracerResults();
@@ -128,7 +137,22 @@ namespace Tracer.Example
                         }
                     }
 
-                    var methods = GetMethodsIerarchy(itemsId, traceResults, new List<Method>());
+                    var traceResultsForCurrentThread = new TraceResults();
+                    for (int k = 0; k < itemsId.Count; k++)
+                    {
+                        traceResultsForCurrentThread.threadsId.Add(traceResults.threadsId[k]);
+                        traceResultsForCurrentThread.classesName.Add(traceResults.classesName[k]);
+                        traceResultsForCurrentThread.inheritedMethodsName.Add(traceResults.inheritedMethodsName[k]);
+                        traceResultsForCurrentThread.methodsName.Add(traceResults.methodsName[k]);
+                        traceResultsForCurrentThread.workTimes.Add(traceResults.workTimes[k]);
+                    }
+
+                    for (int m = 0; m < itemsId.Count; m++)
+                    {
+                        itemsId[m] = m;
+                    }
+
+                    var methods = GetMethodsIerarchy(itemsId, traceResultsForCurrentThread, new List<Method>());
 
                     long threadTime = 0;
                     foreach (var method in methods)
@@ -153,7 +177,7 @@ namespace Tracer.Example
 
             int id = itemsId.LastOrDefault();
 
-            if(id == 0 || 
+            if(id == 0 || itemsId.Count == 1 ||
             (traceResults.methodsName.Count != id + 1 && traceResults.inheritedMethodsName[id] != traceResults.methodsName[id+1]))
             {
                 result.Add(new Method(traceResults.methodsName[id],
@@ -193,8 +217,21 @@ namespace Tracer.Example
             traceResults.workTimes[id],
             GetMethodsIerarchy(itemsId, traceResults, result)));
 
-            if (itemsId.Count != 0)
+            while(itemsId.Count != 0)
             {
+                if (itemsId.Count == 1)
+                {
+                    int lastItemId = itemsId.Last();
+                    itemsId.RemoveAt(lastItemId);
+
+                    result.Add(new Method(traceResults.methodsName[lastItemId],
+                    traceResults.classesName[lastItemId],
+                    traceResults.workTimes[lastItemId],
+                    new List<Method>()));
+
+                    break;
+                }
+
                 int tempId = itemsId.Last();
                 itemsId.RemoveAt(tempId);
 
@@ -286,6 +323,28 @@ namespace Tracer.Example
         }
 
         public void MethodD()
+        {
+            tracer.StartTrace();
+            System.Threading.Thread.Sleep(1);
+            tracer.StopTrace();
+        }
+
+        public TraceResults getTracerResults()
+        {
+            return tracer.GetTraceResult();
+        }
+    }
+    public class E
+    {
+        private B b;
+        private ITracer tracer;
+        public E(ITracer tracer)
+        {
+            this.tracer = tracer;
+            b = new B(this.tracer);
+        }
+
+        public void MethodE()
         {
             tracer.StartTrace();
             System.Threading.Thread.Sleep(1);
