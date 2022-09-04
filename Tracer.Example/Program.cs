@@ -36,24 +36,6 @@ namespace Tracer.Example
                 PrintList(threadResult.Methods, "\t\t");
             }
 
-
-            //string dllfile = @"C:\Users\Gleb\OneDrive\Рабочий стол\Уроки шарпы\lesson\MyLibrary\HelloWorldLibrary\bin\Debug\HelloWorldLibrary.dll";
-            //// Use the file name to load the assembly into the current
-            //// application domain.
-            //Assembly a = Assembly.LoadFile(dllfile);
-            //// Get the type to use.
-            //var myType = a.GetType("HelloWorldLibrary.HelloWorld");
-            //// Get the method to call.
-            //MethodInfo myMethod = myType.GetMethod("SayHello");
-            //// Create an instance.
-            //object obj = Activator.CreateInstance(myType);
-            //// Execute the method.
-            ////myMethod.Invoke(obj, new object[] { threadsResult, new FileStream("Data.json", FileMode.OpenOrCreate) });
-            //var result = myMethod.Invoke(obj, new object[] { "Hleb" });
-            //Console.WriteLine(result);
-            //Console.ReadLine();
-
-
             string dllfile2 = @"C:\Users\Gleb\OneDrive\Рабочий стол\For Git\LaboratoryWork_Tracer\TracerSerializerJSON\bin\Debug\TracerSerializerJSON.dll";
             // Use the file name to load the assembly into the current
             // application domain.
@@ -73,7 +55,7 @@ namespace Tracer.Example
 
             Console.WriteLine("Yoooo");
             var res2 = myMethod2.Invoke(obj2, new object[] { threadsResult, new FileStream(savePath, FileMode.OpenOrCreate) });
-            Console.WriteLine(res2);
+            Console.WriteLine(((Task<string>)res2).Result);
             Console.WriteLine("JSON serialization completed successfully!");
             Console.ReadLine();
         }

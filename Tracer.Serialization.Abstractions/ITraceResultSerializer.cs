@@ -11,6 +11,6 @@ namespace Tracer.Serialization.Abstractions
 {
     public interface ITraceResultSerializer
     {
-        string Serialize(List<Thread> threadsResult, FileStream to);
+        Task<string> Serialize(List<Thread> threadsResult, FileStream to);
     }
 }
