@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FACCCE99-7CAA-4C35-9FAB-91FAA69670C4}</ProjectGuid>
+    <ProjectGuid>{D7139B2B-6690-42CA-A0C3-53613AEB1AAC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tracer.Serialization.JSON</RootNamespace>
-    <AssemblyName>Tracer.Serialization.JSON</AssemblyName>
+    <RootNamespace>TracerSerializerJSON</RootNamespace>
+    <AssemblyName>TracerSerializerJSON</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -69,15 +69,18 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tracer.Serialization.Abstractions">
+      <HintPath>..\Tracer.Serialization.Abstractions\bin\Debug\Tracer.Serialization.Abstractions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="JsonSerializer.cs" />
+    <Compile Include="TracerJSONserializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tracer.Serialization.Abstractions.Data\Tracer.Serialization.Abstractions.Data.csproj">
-      <Project>{925E7E94-AD50-4AD8-8912-A770EE86737E}</Project>
-      <Name>Tracer.Serialization.Abstractions.Data</Name>
+    <ProjectReference Include="..\TracerSerializerData\TracerSerializerData.csproj">
+      <Project>{22B89EF9-4300-476F-8F6B-04FD2DC8F189}</Project>
+      <Name>TracerSerializerData</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

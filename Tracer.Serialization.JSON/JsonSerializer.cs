@@ -10,9 +10,11 @@ namespace Tracer.Serialization.JSON
 {
     public class JsonSerializer : ITraceResultSerializer
     {
-        public void Serialize(TraceResults traceResults, FileStream to)
+        public async void Serialize(List<Thread> threadSResult, FileStream to)
         {
-            
+            await System.Text.Json.JsonSerializer.SerializeAsync<List<Thread>>(to, threadSResult);
+            Console.WriteLine("JSON serialization completed successfully!");
         }
+
     }
 }

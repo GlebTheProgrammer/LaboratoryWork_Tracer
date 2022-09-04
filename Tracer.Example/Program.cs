@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Tracer.Core;
 using Tracer.Core.Domain;
+using Tracer.Serialization.Abstractions.Data;
 
 namespace Tracer.Example
 {
@@ -24,15 +25,6 @@ namespace Tracer.Example
 
             var results = foo.getTracerResults();
 
-            //for (int i = 0; i < results.methodsName.Count; i++)
-            //{
-            //    Console.WriteLine($"Class Name: {results.classesName[i]}\n" +
-            //                      $"Method Name: {results.methodsName[i]}\n" +
-            //                      $"Time: {results.workTimes[i]}\n" +
-            //                      $"Inherited Method: {results.inheritedMethodsName[i]}\n" +
-            //                      $"Thread Id: {results.threadsId[i]}\n");
-            //}
-
             var threadsResult = GetThreadsForSerialization(results);
 
             Console.WriteLine("Threads:\n");
@@ -44,6 +36,45 @@ namespace Tracer.Example
                 PrintList(threadResult.Methods, "\t\t");
             }
 
+
+            //string dllfile = @"C:\Users\Gleb\OneDrive\Рабочий стол\Уроки шарпы\lesson\MyLibrary\HelloWorldLibrary\bin\Debug\HelloWorldLibrary.dll";
+            //// Use the file name to load the assembly into the current
+            //// application domain.
+            //Assembly a = Assembly.LoadFile(dllfile);
+            //// Get the type to use.
+            //var myType = a.GetType("HelloWorldLibrary.HelloWorld");
+            //// Get the method to call.
+            //MethodInfo myMethod = myType.GetMethod("SayHello");
+            //// Create an instance.
+            //object obj = Activator.CreateInstance(myType);
+            //// Execute the method.
+            ////myMethod.Invoke(obj, new object[] { threadsResult, new FileStream("Data.json", FileMode.OpenOrCreate) });
+            //var result = myMethod.Invoke(obj, new object[] { "Hleb" });
+            //Console.WriteLine(result);
+            //Console.ReadLine();
+
+
+            string dllfile2 = @"C:\Users\Gleb\OneDrive\Рабочий стол\For Git\LaboratoryWork_Tracer\TracerSerializerJSON\bin\Debug\TracerSerializerJSON.dll";
+            // Use the file name to load the assembly into the current
+            // application domain.
+            Assembly a2 = Assembly.LoadFile(dllfile2);
+            // Get the type to use.
+            var myType2 = a2.GetType("TracerSerializerJSON.TracerJSONserializer");
+            //var myType2 = a2.GetType("TracerSerializerJSON.ITraceResultSerializer");
+            // Get the method to call.
+
+            MethodInfo myMethod2 = myType2.GetMethod("Serialize");
+            // Create an instance.
+            object obj2 = Activator.CreateInstance(myType2);
+            // Execute the method.
+            //myMethod.Invoke(obj, new object[] { threadsResult, new FileStream("Data.json", FileMode.OpenOrCreate) });
+
+            string savePath = @"C:\Users\Gleb\OneDrive\Рабочий стол\Data.json";
+
+            Console.WriteLine("Yoooo");
+            var res2 = myMethod2.Invoke(obj2, new object[] { threadsResult, new FileStream(savePath, FileMode.OpenOrCreate) });
+            Console.WriteLine(res2);
+            Console.WriteLine("JSON serialization completed successfully!");
             Console.ReadLine();
         }
 
@@ -184,34 +215,7 @@ namespace Tracer.Example
     }
 
 
-    public class Method
-    {
-        public string Name { get; set; }
-        public string ClassName { get; set; }
-        public long Time { get; set; }
-        public List<Method> Methods { get; set; }
-
-        public Method(string name, string className, long time, List<Method> methods)
-        {
-            Name = name;
-            ClassName = className;
-            Time = time;
-            Methods = methods;
-        }
-    }
-    public class Thread
-    {
-        public int Id { get; set; }
-        public long Time { get; set; }
-        public List<Method> Methods { get; set; }
-
-        public Thread(int id, long time, List<Method> methods)
-        {
-            Id = id;
-            Time = time;
-            Methods = methods;
-        }
-    }
+    
 
 
 

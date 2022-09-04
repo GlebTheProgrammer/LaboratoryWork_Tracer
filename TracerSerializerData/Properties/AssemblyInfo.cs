@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанные со сборкой.
-[assembly: AssemblyTitle("Tracer.Serialization.Abstractions.Data")]
+[assembly: AssemblyTitle("TracerSerializerData")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Tracer.Serialization.Abstractions.Data")]
+[assembly: AssemblyProduct("TracerSerializerData")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("925e7e94-ad50-4ad8-8912-a770ee86737e")]
+[assembly: Guid("22b89ef9-4300-476f-8f6b-04fd2dc8f189")]
 
 // Сведения о версии сборки состоят из указанных ниже четырех значений:
 //
