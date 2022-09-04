@@ -36,27 +36,30 @@ namespace Tracer.Example
                 PrintList(threadResult.Methods, "\t\t");
             }
 
-            string dllfile2 = @"C:\Users\Gleb\OneDrive\Рабочий стол\For Git\LaboratoryWork_Tracer\TracerSerializerJSON\bin\Debug\TracerSerializerJSON.dll";
-            // Use the file name to load the assembly into the current
-            // application domain.
-            Assembly a2 = Assembly.LoadFile(dllfile2);
-            // Get the type to use.
-            var myType2 = a2.GetType("TracerSerializerJSON.TracerJSONserializer");
-            //var myType2 = a2.GetType("TracerSerializerJSON.ITraceResultSerializer");
-            // Get the method to call.
+            string dllfile_JSON = @"C:\Users\Gleb\OneDrive\Рабочий стол\For Git\LaboratoryWork_Tracer\TracerSerializerJSON\bin\Debug\TracerSerializerJSON.dll";
+            Assembly assembly_JSON = Assembly.LoadFile(dllfile_JSON);
+            var myType_JSON = assembly_JSON.GetType("TracerSerializerJSON.TracerJSONserializer");
+            MethodInfo myMethod_JSON = myType_JSON.GetMethod("Serialize");
+            object instance_JSON = Activator.CreateInstance(myType_JSON);
+            string savePath_JSON = @"C:\Users\Gleb\OneDrive\Рабочий стол\Data.json";
+            Console.WriteLine("Saving data in JSON file process has been started...");
+            var result_JSON = myMethod_JSON.Invoke(instance_JSON, new object[] { threadsResult, new FileStream(savePath_JSON, FileMode.OpenOrCreate) });
+            Console.WriteLine(((Task<string>)result_JSON).Result);
+            Console.WriteLine("JSON serialization has been completed...\n");
 
-            MethodInfo myMethod2 = myType2.GetMethod("Serialize");
-            // Create an instance.
-            object obj2 = Activator.CreateInstance(myType2);
-            // Execute the method.
-            //myMethod.Invoke(obj, new object[] { threadsResult, new FileStream("Data.json", FileMode.OpenOrCreate) });
 
-            string savePath = @"C:\Users\Gleb\OneDrive\Рабочий стол\Data.json";
+            string dllfile_YAML = @"C:\Users\Gleb\OneDrive\Рабочий стол\For Git\LaboratoryWork_Tracer\TracerSerializerYAML\bin\Debug\TracerSerializerYAML.dll";
+            Assembly assembly_YAML = Assembly.LoadFile(dllfile_YAML);
+            var myType_YAML = assembly_YAML.GetType("TracerSerializerYAML.TracerYAMLserializer");
+            MethodInfo myMethod_YAML = myType_YAML.GetMethod("Serialize");
+            object instance_YAML = Activator.CreateInstance(myType_YAML);
+            string savePath_YAML = @"C:\Users\Gleb\OneDrive\Рабочий стол\Data.yaml";
+            Console.WriteLine("Saving data in YAML file process has been started...");
+            var result_YAML = myMethod_YAML.Invoke(instance_YAML, new object[] { threadsResult, new FileStream(savePath_YAML, FileMode.OpenOrCreate) });
+            Console.WriteLine(((Task<string>)result_YAML).Result);
+            Console.WriteLine("YAML serialization has been completed...\n");
 
-            Console.WriteLine("Yoooo");
-            var res2 = myMethod2.Invoke(obj2, new object[] { threadsResult, new FileStream(savePath, FileMode.OpenOrCreate) });
-            Console.WriteLine(((Task<string>)res2).Result);
-            Console.WriteLine("JSON serialization completed successfully!");
+
             Console.ReadLine();
         }
 

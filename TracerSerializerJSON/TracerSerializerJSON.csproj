@@ -78,12 +78,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TracerSerializerData\TracerSerializerData.csproj">
-      <Project>{22B89EF9-4300-476F-8F6B-04FD2DC8F189}</Project>
-      <Name>TracerSerializerData</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
