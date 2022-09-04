@@ -1,17 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Tracer.Serialization.Abstractions.Data;
 
 namespace TracerSerializerJSON
 {
     public class TracerJSONserializer //: ITraceResultSerializer
     {
-        public string Serialize(List<Thread> threadSResult, FileStream to)
+        public async Task<string> Serialize(List<Thread> threadSResult, FileStream to)
         {
-            JsonSerializer.Serialize<List<Thread>>(to, threadSResult);
+            try
+            {
+                await JsonSerializer.SerializeAsync<List<Thread>>(to, threadSResult);
+            }
+            catch (Exception)
+            {
+                return "Data.json was not saved.";
+            }
 
-            return "Data saved successfully!";
+            return "Data.json saved successfully.";
         }
     }
 }
